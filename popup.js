@@ -1,11 +1,17 @@
 let conversationHistory = [];
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
     const chatContainer = document.getElementById('chat-messages');
     const userInput = document.getElementById('user-input');
     const sendButton = document.getElementById('send-button');
     const statusDiv = document.getElementById('status');
     const clearHistoryButton = document.getElementById('clear-history-button');
+
+    // Load conversation history from storage
+    await loadConversationHistory();
+
+    // Display loaded history
+    renderConversationHistory();
 
     // Check if Ollama is running
     checkOllamaStatus();
@@ -34,6 +40,37 @@ document.addEventListener('DOMContentLoaded', function() {
         chatContainer.scrollTop = chatContainer.scrollHeight;
     }
 
+    // Function to render all messages in conversationHistory
+    function renderConversationHistory() {
+        chatContainer.innerHTML = ''; // Clear current messages
+        conversationHistory.forEach(message => {
+            addMessage(message.content, message.role === 'user');
+        });
+    }
+
+    // Function to load history from chrome.storage
+    async function loadConversationHistory() {
+        return new Promise((resolve) => {
+            chrome.storage.local.get(['conversationHistory'], function(result) {
+                if (result.conversationHistory) {
+                    conversationHistory = result.conversationHistory;
+                } else {
+                    conversationHistory = [];
+                }
+                resolve();
+            });
+        });
+    }
+
+    // Function to save history to chrome.storage
+    async function saveConversationHistory() {
+        return new Promise((resolve) => {
+            chrome.storage.local.set({'conversationHistory': conversationHistory}, function() {
+                resolve();
+            });
+        });
+    }
+
     async function sendMessage() {
         const message = userInput.value.trim();
         if (!message) return;
@@ -44,6 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Add to conversation history
         conversationHistory.push({ role: 'user', content: message });
+        await saveConversationHistory();
 
         try {
             const response = await fetch('http://localhost:11434/api/chat', {
@@ -115,6 +153,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Add to conversation history
             conversationHistory.push({ role: 'assistant', content: botResponse });
+            await saveConversationHistory();
 
         } catch (error) {
             addMessage('Error: Could not connect to Ollama. Make sure it is running.', false);
@@ -131,8 +170,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Clear history button event listener
-    clearHistoryButton.addEventListener('click', function() {
+    clearHistoryButton.addEventListener('click', async function() {
         conversationHistory = []; // Clear the conversation history array
         chatContainer.innerHTML = ''; // Remove all messages from the UI
+        await chrome.storage.local.remove('conversationHistory');
     });
 }); 
