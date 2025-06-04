@@ -57,5 +57,18 @@ Once you have confirmed that the Ollama service is completely stopped and no `ol
 ```bash
 OLLAMA_ORIGINS=chrome-extension://kalbpplgpfneinipiemjppgpbnblkmei ollama serve
 ```
+Please let me know when you have successfully stopped the Ollama service, and then we can try running the command above again
+
+## What does Nil Look like?
+NIL was meant to be integrated in such a way that you can access it whenever you want and It wont take a whole lot of your space or an extra Tab in your browser. That's why I decided to make it as Chrome Extension.
+![image](https://github.com/user-attachments/assets/1b6b0e98-bbdb-4d66-814d-c3cc76cabc9d)
+
+
+<img width="397" alt="Screenshot 2025-05-30 at 2 55 46 pm" src="https://github.com/user-attachments/assets/15b482aa-dcfd-4636-8665-010f71d86e6c" />
+<img width="398" alt="Screenshot 2025-05-30 at 2 56 01 pm" src="https://github.com/user-attachments/assets/f65cc6d7-7687-47ea-94a0-ac31e24d13d6" />
+<img width="401" alt="Screenshot 2025-05-30 at 2 57 37 pm" src="https://github.com/user-attachments/assets/6577f7d2-9e21-478c-b274-3653ece425f5" />
+<img width="399" alt="Screenshot 2025-05-30 at 2 57 47 pm" src="https://github.com/user-attachments/assets/99b35ec4-5a8b-469d-9387-44046bb8c051" />
+
+
 
 Please let me know when you have successfully stopped the Ollama service, and then we can try running the command above again. 
