@@ -1,6 +1,7 @@
 # NIL (Natural Interaction Layer) Chrome Extension
 
 A Chrome extension that provides a chat interface to interact with the DeepSeek R1 model through Ollama.
+![logo01](https://github.com/user-attachments/assets/51f8fde1-ef89-4036-a8a9-747eeb1036dd)
 
 ## Prerequisites
 
